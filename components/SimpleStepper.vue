@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="simple-stepper">
         <div class="stepper-progress-bar">
             <div v-for="(step, index) in stepsDescription"
                  v-bind:class="stepClass(index)">
@@ -25,7 +25,7 @@
             </slot>
         </div>
 
-        <div class="navigation">
+        <div class="stepper-navigation">
             <button v-if="stepNumber > 1" class="btn btn-default" @click.prevent="moveToStep(stepNumber - 1)">
                 back
             </button>
@@ -104,18 +104,20 @@
 
 <style scoped>
 
+    .simple-stepper{
+        margin: auto;
+        width: 1400px;
+    }
+
     .step {
-        margin: 5px;
+        margin: auto;
+        min-height: 500px;
+        padding: 35px;
     }
 
-    .navigation {
-        margin-top: 15px;
+    .stepper-navigation {
+        padding: 0 35px 10px 35px;
     }
-
-    .stepper-progress-bar {
-        margin-bottom: 40px;
-    }
-
     .stepper-progress-bar {
         display: flex;
         width: 100%;

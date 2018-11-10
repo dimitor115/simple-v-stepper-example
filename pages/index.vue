@@ -1,7 +1,6 @@
 <template>
-    <div>
-        <h1> HEJ ! </h1>
-        <simple-stepper :steps-description="stepsDescriptions">
+    <div class="example">
+        <simple-stepper class="example-stepper" :steps-description="stepsDescriptions">
             <div slot="step-1">
                 <h1> soidfjsodfjsdif </h1>
             </div>
@@ -23,7 +22,9 @@
                 {name: "Bla bla"},
                 {name: "HEjo"},
                 {name: "HEjo"},
-                {name: "HEjo"}
+                {name: "HEjo"},
+                {name: "HEjo"},
+                {name: "HEjo"},
             ]
         })
     }
@@ -31,5 +32,7 @@
 </script>
 
 <style scoped>
-
+    .example-stepper {
+        background-color: #f7f8fb;
+    }
 </style>
