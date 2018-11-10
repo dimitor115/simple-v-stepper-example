@@ -1,24 +1,22 @@
 <template>
     <div>
-        <div class="row stepper-progress-bar">
-            <div class="simple-stepper">
-                <div v-for="(step, index) in stepsDescription"
-                     v-bind:class="stepClass(index)">
-                    <div class="mdl_stepper-step-wrapper" @click.prevent="moveNextStep(index + 1)">
-                        <div class="simple-stepper-circle">
-                            <span> {{index +1}} </span>
-                        </div>
-                        <div class="simple-stepper-title">
-                            {{step.name}}
-                        </div>
+        <div class="stepper-progress-bar">
+            <div v-for="(step, index) in stepsDescription"
+                 v-bind:class="stepClass(index)">
+                <div class="mdl_stepper-step-wrapper" @click.prevent="moveNextStep(index + 1)">
+                    <div class="step-circle">
+                        <span> {{index +1}} </span>
                     </div>
-                    <div v-if="index > 0" class="simple-stepper-bar-left"></div>
-                    <div v-if="index + 1  < stepsDescription.length" class="simple-stepper-bar-right"></div>
+                    <div class="step-title">
+                        {{step.name}}
+                    </div>
                 </div>
+                <div v-if="index > 0" class="bar-left"></div>
+                <div v-if="index + 1  < stepsDescription.length" class="bar-right"></div>
             </div>
         </div>
 
-        <div class="row step">
+        <div class="step">
             <slot v-for="index in stepsDescription.length"
                   :name="'step-'+index"
                   v-if="stepNumber === index"
@@ -47,7 +45,7 @@
 
 <script>
     export default {
-        name: 'simple-stepper',
+        name: 'SimpleStepper',
         props: {
             stepsDescription: [],
             stepValidation: {
@@ -83,9 +81,9 @@
             },
             stepClass(index) {
                 return {
-                    'simple-stepper-step step-done': this.stepNumber > index + 1,
-                    'simple-stepper-step editable-step': this.stepNumber === index + 1,
-                    'simple-stepper-step': this.stepNumber < index + 1
+                    '-step step-done': this.stepNumber > index + 1,
+                    '-step editable-step': this.stepNumber === index + 1,
+                    '-step': this.stepNumber < index + 1
                 }
             },
             finishStepper() {
@@ -118,20 +116,20 @@
         margin-bottom: 40px;
     }
 
-    .stepper-progress-bar .simple-stepper {
+    .stepper-progress-bar {
         display: flex;
         width: 100%;
         margin: 0 auto;
     }
 
-    .stepper-progress-bar .simple-stepper .simple-stepper-step{
+    .stepper-progress-bar .-step {
         display: table-cell;
         position: relative;
         padding: 24px;
         width: 33%;
     }
 
-    .stepper-progress-bar .simple-stepper .simple-stepper-step .simple-stepper-title {
+    .stepper-progress-bar .-step .step-title {
         margin-top: 16px;
         font-size: 20px;
         text-align: center;
@@ -139,12 +137,12 @@
         color: rgba(0, 0, 0, .87);
     }
 
-    .stepper-progress-bar .simple-stepper .mdl_stepper-step-wrapper:hover .simple-stepper-circle ,
-    .stepper-progress-bar .simple-stepper .mdl_stepper-step-wrapper:active .simple-stepper-circle {
+    .stepper-progress-bar .mdl_stepper-step-wrapper:hover .step-circle,
+    .stepper-progress-bar .mdl_stepper-step-wrapper:active .step-circle {
         background-color: black;
     }
 
-    .stepper-progress-bar .simple-stepper .simple-stepper-circle {
+    .stepper-progress-bar .step-circle {
         width: 50px;
         height: 50px;
         margin: 0 auto;
@@ -157,57 +155,58 @@
         color: white;
     }
 
-    .stepper-progress-bar .simple-stepper .simple-stepper-circle > div {
+    .stepper-progress-bar .step-circle > div {
         -webkit-transform: none;
         transform: none;
         -webkit-transition: -webkit-transform .175s cubic-bazier(.175, .67, .83, .67);
         transition: transform .175s cubic-bazier(.175, .67, .83, .67);
     }
 
-    .stepper-progress-bar .simple-stepper .editable-step .simple-stepper-circle {
-        background-color: $sbp-admin-fa-active-light;
+    .stepper-progress-bar .editable-step .step-circle {
+        background-color: $ sbp-admin-fa-active-light;
         -webkit-transform: scale(1.3, 1.3);
         transform: scale(1.3, 1.3);
         -webkit-animation: toggleBtnAnim .175s;
         animation: toggleBtnAnim .175s;
     }
 
-    .stepper-progress-bar .simple-stepper .editable-step .simple-stepper-circle > div {
+    .stepper-progress-bar .editable-step .step-circle > div {
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
         -webkit-transition: -webkit-transform .175s cubic-bazier(.175, .67, .83, .67);
         transition: transform .175s cubic-bazier(.175, .67, .83, .67);
     }
 
-    .stepper-progress-bar .simple-stepper .simple-stepper-bar-left,
-    .stepper-progress-bar .simple-stepper .simple-stepper-bar-right {
+    .stepper-progress-bar .bar-left,
+    .stepper-progress-bar .bar-right {
         position: absolute;
         top: 50px;
         height: 3px;
         border-top: 1px solid #BDBDBD;
     }
 
-    .stepper-progress-bar .simple-stepper .simple-stepper-bar-left {
+    .stepper-progress-bar .bar-left {
         left: 0;
         right: 50%;
         margin-right: 50px;
     }
-    .stepper-progress-bar .simple-stepper .simple-stepper-bar-right {
+
+    .stepper-progress-bar .bar-right {
         right: 0;
         left: 50%;
         margin-left: 50px;
     }
 
-    .simple-stepper .simple-stepper-step.step-done .simple-stepper-circle:before {
+    .-step.step-done .step-circle:before {
         content: "\2714";
     }
 
-    .simple-stepper .simple-stepper-step.step-done .simple-stepper-circle *,
-    .simple-stepper .simple-stepper-step.editable-step .simple-stepper-circle * {
+    .-step.step-done .step-circle *,
+    .-step.editable-step .step-circle * {
         display: none;
     }
 
-    .simple-stepper .simple-stepper-step.editable-step .simple-stepper-circle:before {
+    .-step.editable-step .step-circle:before {
         content: "\270E";
     }
 

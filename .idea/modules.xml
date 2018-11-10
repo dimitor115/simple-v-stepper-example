@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/simple-v-stepper.iml" filepath="$PROJECT_DIR$/.idea/simple-v-stepper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../simple-v-stepper-dev/.idea/simple-v-stepper.iml" filepath="$PROJECT_DIR$/../simple-v-stepper-dev/.idea/simple-v-stepper.iml" />
     </modules>
   </component>
 </project>
