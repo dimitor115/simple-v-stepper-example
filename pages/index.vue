@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import SimpleStepper from "../components/SimpleStepper";
+    import SimpleStepper from "../components/simple-v-stepper/SimpleStepper";
 
     export default {
         name: "index",
@@ -21,10 +21,7 @@
             stepsDescriptions: [
                 {name: "Bla bla"},
                 {name: "HEjo"},
-                {name: "HEjo"},
-                {name: "HEjo"},
-                {name: "HEjo"},
-                {name: "HEjo"},
+                {name: "HEjo"}
             ]
         })
     }

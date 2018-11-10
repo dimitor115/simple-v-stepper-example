@@ -26,18 +26,18 @@
         </div>
 
         <div class="stepper-navigation">
-            <button v-if="stepNumber > 1" class="btn btn-default" @click.prevent="moveToStep(stepNumber - 1)">
+            <button v-if="stepNumber > 1" class="button back" @click.prevent="moveToStep(stepNumber - 1)">
                 back
             </button>
-            <button v-else class="btn btn-default disabled"> back</button>
+            <button v-else class="button back"> back</button>
 
             <button v-if="stepNumber < stepsDescription.length"
-                    class="btn btn-primary pull-right"
+                    class="button next"
                     @click.prevent="moveNextStep(stepNumber + 1)">
                 next
             </button>
 
-            <button v-else class="btn btn-success pull-right" @click.prevent="finishStepper"> finish
+            <button v-else class="button next" @click.prevent="finishStepper"> finish
             </button>
         </div>
     </div>
@@ -81,9 +81,9 @@
             },
             stepClass(index) {
                 return {
-                    '-step step-done': this.stepNumber > index + 1,
-                    '-step editable-step': this.stepNumber === index + 1,
-                    '-step': this.stepNumber < index + 1
+                    'step-navigation step-done': this.stepNumber > index + 1,
+                    'step-navigation editable-step': this.stepNumber === index + 1,
+                    'step-navigation': this.stepNumber < index + 1
                 }
             },
             finishStepper() {
@@ -104,9 +104,39 @@
 
 <style scoped>
 
-    .simple-stepper{
-        margin: auto;
-        width: 1400px;
+    /*navigation button -- start*/
+    .button {
+        border: none;
+        color: white;
+        padding: 12px 28px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+    .back {
+        background-color: white;
+        color: black;
+        border: 2px solid #e7e7e7;
+    }
+
+    .back:hover {background-color: #e7e7e7;}
+
+    .next {
+        background-color: white;
+        color: black;
+        border: 2px solid #555555;
+        float: right !important;
+    }
+
+    .next:hover {
+        background-color: #555555;
+        color: white;
     }
 
     .step {
@@ -118,20 +148,29 @@
     .stepper-navigation {
         padding: 0 35px 10px 35px;
     }
-    .stepper-progress-bar {
-        display: flex;
-        width: 100%;
-        margin: 0 auto;
+
+    .simple-stepper{
+        margin: auto;
+        width: 1100px;
     }
 
-    .stepper-progress-bar .-step {
+    /*progress bar*/
+    .stepper-progress-bar {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0 auto;
+        /*padding: 24px;*/
+    }
+
+    .stepper-progress-bar .step-navigation {
         display: table-cell;
         position: relative;
         padding: 24px;
-        width: 33%;
+        width: 50%;
     }
 
-    .stepper-progress-bar .-step .step-title {
+    .stepper-progress-bar .step-navigation .step-title {
         margin-top: 16px;
         font-size: 20px;
         text-align: center;
@@ -165,7 +204,7 @@
     }
 
     .stepper-progress-bar .editable-step .step-circle {
-        background-color: $ sbp-admin-fa-active-light;
+        background-color: black;
         -webkit-transform: scale(1.3, 1.3);
         transform: scale(1.3, 1.3);
         -webkit-animation: toggleBtnAnim .175s;
@@ -199,19 +238,21 @@
         margin-left: 50px;
     }
 
-    .-step.step-done .step-circle:before {
+    .step-navigation.step-done .step-circle:before {
         content: "\2714";
     }
 
-    .-step.step-done .step-circle *,
-    .-step.editable-step .step-circle * {
+    .step-navigation.step-done .step-circle *,
+    .step-navigation.editable-step .step-circle * {
         display: none;
     }
 
-    .-step.editable-step .step-circle:before {
+    .step-navigation.editable-step .step-circle:before {
         content: "\270E";
     }
 
+
+    /*progress bar buttons animations*/
     @keyframes toggleBtnAnim {
         0% {
             -webkit-transform: scale(1, 1);
