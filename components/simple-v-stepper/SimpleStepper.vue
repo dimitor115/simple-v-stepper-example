@@ -191,8 +191,8 @@
         box-shadow: 0 3px 6px rgba(0, 0, 0, .275);
         border-radius: 50%;
         text-align: center;
-        line-height: 2em;
-        font-size: 25px;
+        line-height: 2.5em;
+        font-size: 20px;
         color: white;
     }
 
