@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1> Choose your avatar !</h1>
-        <div style="background-color: #7f828b">
+        <div style="background-color: #F5F5F5">
             <img ref="picPreview" :src="pictureInstance.value" height="200" alt="Image preview...">
         </div>
         <br><br>

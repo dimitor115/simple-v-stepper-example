@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="example-bg">
         <h3> Select your favorite genre :</h3>
 
-        <div v-for="(genre, index) in genres">
+        <div v-for="(_, index) in genres">
             <input type="checkbox" v-model="genres[index]"> {{index}}
         </div>
     </div>
@@ -21,5 +21,4 @@
 </script>
 
 <style scoped>
-
 </style>

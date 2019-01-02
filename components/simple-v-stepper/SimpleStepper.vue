@@ -31,6 +31,8 @@
             </button>
             <button v-else class="button back"> back</button>
 
+            <button @click.prevent="resetStepper" class="button back">reset</button>
+
             <button v-if="stepNumber < stepsDescription.length"
                     class="button next"
                     @click.prevent="moveNextStep(stepNumber + 1)">
@@ -81,6 +83,7 @@
             },
             resetStepper() {
                 this.stepNumber = 1
+                this.$emit('onReset')
             },
             stepClass(index) {
                 return {
@@ -128,7 +131,9 @@
         border: 2px solid #e7e7e7;
     }
 
-    .back:hover {background-color: #e7e7e7;}
+    .back:hover {
+        background-color: #e7e7e7;
+    }
 
     .next {
         background-color: white;
@@ -148,8 +153,6 @@
         margin: auto;
         min-height: 500px;
         padding: 20px;
-        /*dev only*/
-        background-color: pink;
         display: flex;
         justify-content: center;
     }
@@ -158,7 +161,8 @@
         padding: 0 20px 10px 20px;
     }
 
-    .simple-stepper{
+    .simple-stepper {
+        background-color: white;
         margin: auto;
         width: 1100px;
     }
@@ -169,7 +173,7 @@
         justify-content: center;
         width: 100%;
         margin: 0 auto;
-        padding : 10px 0 0 0;
+        padding: 10px 0 0 0;
         /*padding: 24px;*/
     }
 
