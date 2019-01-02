@@ -21,7 +21,7 @@
                   :name="'step-'+index"
                   v-if="stepNumber === index"
                   transition="fade">
-                Slot for {{stepsDescription[index]}}
+                Slot for step {{index}}
             </slot>
         </div>
 
@@ -47,7 +47,10 @@
     export default {
         name: 'SimpleStepper',
         props: {
-            stepsDescription: [],
+            stepsDescription: {
+                type: Array,
+                default: []
+            },
             stepValidation: {
                 type: Boolean,
                 default: false
@@ -147,6 +150,8 @@
         padding: 20px;
         /*dev only*/
         background-color: pink;
+        display: flex;
+        justify-content: center;
     }
 
     .stepper-navigation {
