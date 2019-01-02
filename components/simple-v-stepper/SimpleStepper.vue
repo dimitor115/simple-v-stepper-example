@@ -3,7 +3,7 @@
         <div class="stepper-progress-bar">
             <div v-for="(step, index) in stepsDescription"
                  v-bind:class="stepClass(index)">
-                <div class="mdl_stepper-step-wrapper" @click.prevent="moveNextStep(index + 1)">
+                <div class="stepper-step-wrapper" @click.prevent="moveNextStep(index + 1)">
                     <div class="step-circle">
                         <span> {{index +1}} </span>
                     </div>
@@ -135,18 +135,22 @@
     }
 
     .next:hover {
-        background-color: #555555;
+        background-color: #0D47A1;
         color: white;
     }
+
+    /*navigation button end*/
 
     .step {
         margin: auto;
         min-height: 500px;
-        padding: 35px;
+        padding: 20px;
+        /*dev only*/
+        background-color: pink;
     }
 
     .stepper-navigation {
-        padding: 0 35px 10px 35px;
+        padding: 0 20px 10px 20px;
     }
 
     .simple-stepper{
@@ -160,6 +164,7 @@
         justify-content: center;
         width: 100%;
         margin: 0 auto;
+        padding : 10px 0 0 0;
         /*padding: 24px;*/
     }
 
@@ -178,9 +183,9 @@
         color: rgba(0, 0, 0, .87);
     }
 
-    .stepper-progress-bar .mdl_stepper-step-wrapper:hover .step-circle,
-    .stepper-progress-bar .mdl_stepper-step-wrapper:active .step-circle {
-        background-color: black;
+    .stepper-progress-bar .stepper-step-wrapper:hover .step-circle,
+    .stepper-progress-bar .stepper-step-wrapper:active .step-circle {
+        background-color: #0D47A1;
     }
 
     .stepper-progress-bar .step-circle {
@@ -204,7 +209,7 @@
     }
 
     .stepper-progress-bar .editable-step .step-circle {
-        background-color: black;
+        background-color: #0D47A1;
         -webkit-transform: scale(1.3, 1.3);
         transform: scale(1.3, 1.3);
         -webkit-animation: toggleBtnAnim .175s;

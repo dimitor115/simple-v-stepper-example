@@ -31,5 +31,6 @@
 <style scoped>
     .example-stepper {
         background-color: #f7f8fb;
+        width: 1000px;
     }
 </style>
