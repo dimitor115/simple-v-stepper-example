@@ -1,23 +1,16 @@
 <template>
-    <div class="example">
-        <simple-stepper class="example-stepper" :steps-description="stepsDescriptions" @onReset="resetData">
-            <div slot="step-1">
-                <personal-data-from
-                        ref="personalData"
-                        :data-instance="personalDataInstance">
-                </personal-data-from>
-            </div>
-            <div slot="step-2">
-                <photo-upload
-                        :picture-instance="avatarInstance">
-                </photo-upload>
-            </div>
-
-            <div slot="step-3">
-                <genre-choose :genres="exampleGenres">
-                </genre-choose>
-            </div>
-        </simple-stepper>
+    <div class="example-wrapper">
+        <simple-stepper class="example" :steps-description="stepsDescriptions" @onReset="resetData">
+            <personal-data-from 
+                class="step"
+                slot="step-1"
+                ref="personalData"
+                :data-instance="personalDataInstance" />
+            <photo-upload 
+                class="step" slot="step-2" :picture-instance="avatarInstance" />
+            <genre-choose 
+                class="step" :genres="exampleGenres"  slot="step-3" />
+      </simple-stepper>
     </div>
 </template>
 
@@ -88,16 +81,29 @@
 
 </script>
 
-<style scoped>
-    .example{
-        height: 2000px;
-        padding-top: 100px;
-        background-color: #F5F5F5;
+<style>
+    body {
+        margin: 0;
+        background: #333;
+        font-family: 'Roboto';
+        background: url(https://images.unsplash.com/photo-1545171653-1e90329b6600?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80);
+        background-size: cover;
     }
 
-    .example-stepper {
-        /*background-color: #f7f8fb;*/
-        width: 1000px;
-        box-shadow: 5px 10px 18px #888888;
+    .example-wrapper {
+        height: 100vh;
+        max-width: 600px;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
     }
+
+    .example {
+        box-shadow: 0 3px 12px 0 rgba(0,0,0,0.12); 
+    }
+
+    .example .step {
+        min-height: 300px;
+    }
+
 </style>

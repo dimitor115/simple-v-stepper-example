@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 
-
 import _6f6c098b from './layouts/default.vue'
 
 const layouts = { "_default": _6f6c098b }
 
-
-
 export default {
   head: {"meta":[],"link":[],"style":[],"script":[]},
+
   render(h, props) {
     const loadingEl = h('nuxt-loading', { ref: 'loading' })
     const layoutEl = h(this.layout || 'nuxt')
@@ -24,10 +22,18 @@ export default {
       props: {
         name: 'layout',
         mode: 'out-in'
+      },
+      on: {
+        beforeEnter(el) {
+          // Ensure to trigger scroll event after calling scrollBehavior
+          window.$nuxt.$nextTick(() => {
+            window.$nuxt.$emit('triggerScroll')
+          })
+        }
       }
     }, [ templateEl ])
 
-    return h('div',{
+    return h('div', {
       domProps: {
         id: '__nuxt'
       }
@@ -40,39 +46,38 @@ export default {
     layout: null,
     layoutName: ''
   }),
-  beforeCreate () {
+  beforeCreate() {
     Vue.util.defineReactive(this, 'nuxt', this.$options.nuxt)
   },
-  created () {
+  created() {
     // Add this.$nuxt in child instances
     Vue.prototype.$nuxt = this
     // add to window so we can listen when ready
     if (typeof window !== 'undefined') {
       window.$nuxt = this
-      
     }
     // Add $nuxt.error()
     this.error = this.nuxt.error
   },
-  
-  mounted () {
+
+  mounted() {
     this.$loading = this.$refs.loading
   },
   watch: {
     'nuxt.err': 'errorChanged'
   },
-  
+
   methods: {
-    
-    errorChanged () {
+    errorChanged() {
       if (this.nuxt.err && this.$loading) {
         if (this.$loading.fail) this.$loading.fail()
         if (this.$loading.finish) this.$loading.finish()
       }
     },
-    
-    
+
     setLayout(layout) {
+      if(layout && typeof layout !== 'string') throw new Error('[nuxt] Avoid using non-string value as layout property.')
+
       if (!layout || !layouts['_' + layout]) {
         layout = 'default'
       }
@@ -86,7 +91,6 @@ export default {
       }
       return Promise.resolve(layouts['_' + layout])
     }
-    
   },
   components: {
     NuxtLoading
