@@ -1,48 +1,47 @@
 <template>
-    <div class="simple-stepper">
-        <div class="stepper-progress-bar">
+    <section class="simple-stepper">
+        <header class="progress-bar">
             <div v-for="(step, index) in stepsDescription"
                  v-bind:class="stepClass(index)">
-                <div class="stepper-step-wrapper" @click.prevent="moveNextStep(index + 1)">
-                    <div class="step-circle">
+                <button class="step-navigation-button" @click.prevent="moveNextStep(index + 1)">
+                    <div class="step-navigation-icon">
                         <span> {{index +1}} </span>
                     </div>
-                    <div class="step-title">
+                    <span class="step-navigation-title">
                         {{step.name}}
-                    </div>
-                </div>
-                <div v-if="index > 0" class="bar-left"></div>
-                <div v-if="index + 1  < stepsDescription.length" class="bar-right"></div>
+                    </span>
+                </button>
+                <!-- <div v-if="index > 0" class="bar-left"></div> -->
+                <div v-if="index + 1  < stepsDescription.length" class="step-navigation-deco"></div>
             </div>
-        </div>
+        </header>
 
-        <div class="step">
+        <section class="step-wrapper">
             <slot v-for="index in stepsDescription.length"
                   :name="'step-'+index"
                   v-if="stepNumber === index"
                   transition="fade">
                 Slot for step {{index}}
             </slot>
-        </div>
+        </section>
 
-        <div class="stepper-navigation">
-            <button v-if="stepNumber > 1" class="button back" @click.prevent="moveToStep(stepNumber - 1)">
-                back
+        <footer class="footer-navigation">
+            <button @click.prevent="resetStepper" class="footer-button footer-button--reset">Reset</button>
+
+            <button class="footer-button" @click.prevent="moveToStep(stepNumber - 1)" :disabled="stepNumber <= 1">
+                Back
             </button>
-            <button v-else class="button back"> back</button>
-
-            <button @click.prevent="resetStepper" class="button back">reset</button>
 
             <button v-if="stepNumber < stepsDescription.length"
-                    class="button next"
+                    class="footer-button footer-button--next"
                     @click.prevent="moveNextStep(stepNumber + 1)">
-                next
+                Next
             </button>
-
-            <button v-else class="button next" @click.prevent="finishStepper"> finish
+            <button v-else class="footer-button footer-button--next" @click.prevent="finishStepper">
+                Finish
             </button>
-        </div>
-    </div>
+        </footer>
+    </section>
 </template>
 
 <script>
@@ -87,8 +86,8 @@
             },
             stepClass(index) {
                 return {
-                    'step-navigation step-done': this.stepNumber > index + 1,
-                    'step-navigation editable-step': this.stepNumber === index + 1,
+                    'step-navigation step-navigation--done': this.stepNumber > index + 1,
+                    'step-navigation step-navigation--editable': this.stepNumber === index + 1,
                     'step-navigation': this.stepNumber < index + 1
                 }
             },
@@ -109,199 +108,176 @@
 </script>
 
 <style scoped>
+    * {
+        box-sizing: border-box;
+    }
 
-    /*navigation button -- start*/
-    .button {
+    button {
+        font: inherit;
+        appearance: none;
         border: none;
-        color: white;
-        padding: 12px 28px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        -webkit-transition-duration: 0.4s; /* Safari */
-        transition-duration: 0.4s;
+        padding: 0;
+        margin: 0;
+        background: transparent;
         cursor: pointer;
     }
 
-    .back {
-        background-color: white;
-        color: black;
-        border: 2px solid #e7e7e7;
-    }
-
-    .back:hover {
-        background-color: #e7e7e7;
-    }
-
-    .next {
-        background-color: white;
-        color: black;
-        border: 2px solid #555555;
-        float: right !important;
-    }
-
-    .next:hover {
-        background-color: #0D47A1;
-        color: white;
-    }
-
-    /*navigation button end*/
-
-    .step {
-        margin: auto;
-        min-height: 500px;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .stepper-navigation {
-        padding: 0 20px 10px 20px;
-    }
-
     .simple-stepper {
-        background-color: white;
-        margin: auto;
-        width: 1100px;
+        background: #fff;
+        width: 100%;
+        border-radius: 16px;
     }
 
-    /*progress bar*/
-    .stepper-progress-bar {
+    .progress-bar {
         display: flex;
         justify-content: center;
         width: 100%;
-        margin: 0 auto;
-        padding: 10px 0 0 0;
-        /*padding: 24px;*/
+        padding: 20px 10px;
     }
 
-    .stepper-progress-bar .step-navigation {
-        display: table-cell;
+    .step-navigation {
         position: relative;
-        padding: 24px;
-        width: 50%;
+        flex: 1 0 0;
     }
 
-    .stepper-progress-bar .step-navigation .step-title {
-        margin-top: 16px;
-        font-size: 20px;
-        text-align: center;
-        font-weight: 500;
-        color: rgba(0, 0, 0, .87);
-    }
-
-    .stepper-progress-bar .stepper-step-wrapper:hover .step-circle,
-    .stepper-progress-bar .stepper-step-wrapper:active .step-circle {
-        background-color: #0D47A1;
-    }
-
-    .stepper-progress-bar .step-circle {
-        width: 50px;
-        height: 50px;
+    .step-navigation-button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         margin: 0 auto;
-        background-color: #9E9E9E;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, .275);
+        outline: none;
+        color: #444;
+    }
+
+    .step-navigation-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
-        text-align: center;
-        line-height: 2.5em;
-        font-size: 20px;
-        color: white;
+        border: 2px solid #eee;
+        font-size: 15px;
+        transition: all .1s ease-in-out;
     }
 
-    .stepper-progress-bar .step-circle > div {
-        -webkit-transform: none;
-        transform: none;
-        -webkit-transition: -webkit-transform .175s cubic-bazier(.175, .67, .83, .67);
-        transition: transform .175s cubic-bazier(.175, .67, .83, .67);
+    .step-navigation-title {
+        margin-top: 10px;
+        font-weight: 500;
+        color: #666;
+        font-size: 15px;
     }
 
-    .stepper-progress-bar .editable-step .step-circle {
-        background-color: #0D47A1;
-        -webkit-transform: scale(1.3, 1.3);
-        transform: scale(1.3, 1.3);
-        -webkit-animation: toggleBtnAnim .175s;
+    .step-navigation-button:hover .step-navigation-icon,
+    .step-navigation-button:focus .step-navigation-icon {
+        background: #0D47A1;
+        color: #fff;
+        border-color: transparent;
+    }
+    
+    .step-navigation-deco {
+        width: 36%;
+        height: 2px;
+        background: #eee;
+        position: absolute;
+        right: -18%;
+        top: 25px;
+    }
+
+    .step-navigation--editable .step-navigation-icon {
+        background: #0D47A1;
+        color: #fff;
+        border-color: transparent;
+        transform: scale(1.2);
         animation: toggleBtnAnim .175s;
     }
 
-    .stepper-progress-bar .editable-step .step-circle > div {
-        -webkit-transform: rotate(45deg);
-        transform: rotate(45deg);
-        -webkit-transition: -webkit-transform .175s cubic-bazier(.175, .67, .83, .67);
-        transition: transform .175s cubic-bazier(.175, .67, .83, .67);
-    }
-
-    .stepper-progress-bar .bar-left,
-    .stepper-progress-bar .bar-right {
-        position: absolute;
-        top: 50px;
-        height: 3px;
-        border-top: 1px solid #BDBDBD;
-    }
-
-    .stepper-progress-bar .bar-left {
-        left: 0;
-        right: 50%;
-        margin-right: 50px;
-    }
-
-    .stepper-progress-bar .bar-right {
-        right: 0;
-        left: 50%;
-        margin-left: 50px;
-    }
-
-    .step-navigation.step-done .step-circle:before {
-        content: "\2714";
-    }
-
-    .step-navigation.step-done .step-circle *,
-    .step-navigation.editable-step .step-circle * {
+    .step-navigation--done .step-navigation-icon span,
+    .step-navigation--editable .step-navigation-icon span {
         display: none;
     }
 
-    .step-navigation.editable-step .step-circle:before {
+    .step-navigation--done .step-navigation-icon:before {
+        content: "\2714";
+    }
+    
+    .step-navigation--done .step-navigation-icon {
+        background: #eee;    
+    }
+    
+    .step-navigation--editable .step-navigation-icon:before {
         content: "\270E";
     }
 
-
-    /*progress bar buttons animations*/
-    @keyframes toggleBtnAnim {
-        0% {
-            -webkit-transform: scale(1, 1);
-            transform: scale(1, 1);
-        }
-        25% {
-            -webkit-transform: scale(1.4, 1.4);
-            transform: scale(1.4, 1.4);
-        }
-        75% {
-            -webkit-transform: scale(1.2, 1.2);
-            transform: scale(1.2, 1.2);
-        }
-        100% {
-            -webkit-transform: scale(1.3, 1.3);
-            transform: scale(1.3, 1.3);
-        }
+    .step-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 10px;
     }
 
-    @-webkit-keyframes toggleBtnAnim {
+    .footer-navigation {
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px;
+        background: #eee;
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+    }
+
+    .footer-button {
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 8px;
+        color: #444;
+        font-weight: 500;
+        outline: none;
+        transition: background .1s ease-in-out;
+    }
+
+    .footer-button:hover,
+    .footer-button:focus {
+        background: #ddd;
+    }
+
+    .footer-button:active {
+        background: #ccc;
+    }
+
+    .footer-button--reset {
+        margin-right: auto;
+    }
+
+    .footer-button--next {
+        background: #0D47A1;
+        color: #eee;
+        letter-spacing: .3px;
+        margin-left: 5px;
+    }
+
+    .footer-button--next:hover,
+    .footer-button--next:focus {
+        background: #003483;
+    }
+
+    .footer-button--next:active {
+        background: #03265a;
+    }
+
+
+    @keyframes toggleBtnAnim {
         0% {
-            -webkit-transform: scale(1, 1);
             transform: scale(1, 1);
         }
         25% {
-            -webkit-transform: scale(1.4, 1.4);
-            transform: scale(1.4, 1.4);
+            transform: scale(1.5, 1.5);
         }
         75% {
-            -webkit-transform: scale(1.2, 1.2);
-            transform: scale(1.2, 1.2);
+            transform: scale(1.1, 1.1);
         }
         100% {
-            -webkit-transform: scale(1.3, 1.3);
-            transform: scale(1.3, 1.3);
+            transform: scale(1.2, 1.2);
         }
     }
 
